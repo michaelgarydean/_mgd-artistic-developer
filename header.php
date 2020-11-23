@@ -25,6 +25,10 @@
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', '_mgd-artistic-developer' ); ?></a>
 
+
+	<!-- this is going to break when it's not front-page.php -->
+	<div id="landing-page-header-container" class="header-container">
+
 	<header id="masthead" class="site-header">
 		<div class="site-branding">
 			<?php
