@@ -163,3 +163,61 @@ if ( ! function_exists( 'wp_body_open' ) ) :
 		do_action( 'wp_body_open' );
 	}
 endif;
+
+
+if ( ! function_exists( '_mgd_artistic_developer_featured_posts_from_category' ) ) :
+	/**
+	 * Displays an optional post thumbnail.
+	 *
+	 * Wraps the post thumbnail in an anchor element on index views, or a div
+	 * element when on single views.
+	 */
+	function _mgd_artistic_developer_featured_posts_from_category( $category_name, $number_of_posts_to_show = 3 ) {
+
+		// initialize loop counter to identify which post
+		$post_number = 1;
+
+		// the query
+        $the_query = new WP_Query(array(
+            'category_name' => $category_name,
+            'post_status' => 'publish',
+            'posts_per_page' => $number_of_posts_to_show,
+        ));
+
+        if ($the_query->have_posts()) :
+            while ($the_query->have_posts()) : $the_query->the_post();
+
+            	/* Create Grid <div< */
+            	?>
+				<div id=<?php echo "\"featured-content-grid-item-" . $post_number . "\"" ?> class="featured-content-grid-item">
+
+		    		<article class="featured-post">
+					<?php
+
+	             	the_post_thumbnail();
+	             	the_title();
+	            	the_excerpt();
+
+	             	?>
+					</article><!-- .featured-post -->
+					
+				</div><!-- .featured-content-grid-item -->
+				<?php
+
+
+				//increment the loop counter
+				$post_number++;
+
+            endwhile;
+            
+            wp_reset_postdata();
+
+        else : ?>
+            <p><?php __('No News'); ?></p>
+        <?php 
+    	endif;
+
+
+
+	}
+	endif;
