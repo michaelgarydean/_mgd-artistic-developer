@@ -165,18 +165,56 @@ if ( ! function_exists( 'wp_body_open' ) ) :
 endif;
 
 
-if ( ! function_exists( '_mgd_artistic_developer_featured_posts_from_category' ) ) :
+if ( ! function_exists( '_mgd_artistic_developer_featured_posts' ) ) :
 	/**
-	 * Displays an optional post thumbnail.
+	 * Create a <section> to hold featured projects, then render the projects using _mgd_artistic_developer_featured_posts_from_category()
 	 *
-	 * Wraps the post thumbnail in an anchor element on index views, or a div
-	 * element when on single views.
+	 * @see _mgd_artistic_developer_featured_posts_from_category()
 	 */
-	function _mgd_artistic_developer_featured_posts_from_category( $category_name, $number_of_posts_to_show = 3 ) {
+	function _mgd_artistic_developer_featured_posts( $category_name, $which_section, $number_of_posts_to_show = 3  ) {
 
-		// initialize loop counter to identify which post
-		$post_number = 1;
+		?>
 
+
+		<section id="projects" class="featured-content-section" data-scroll-section data-scroll-sticky>
+
+			<!-- section title -->
+	    	<div class="scrolling-titles" data-scroll>
+	    		<?php
+		    		$category = get_category_by_slug( $category_name ); 
+					$category_name = $category->name;
+	    		?>
+	    		<h2 data-scroll><?php echo $category->name;	?></h2>
+	    	</div><!-- .scrolling-titles -->
+
+	    	<!-- grid layout with posts -->
+	    	<div id="featured-content-grid-wrapper" <?php echo $which_section;?> class="featured-content-grid-wrapper">
+
+			<?php
+
+			_mgd_artistic_developer_featured_posts_from_category( $category_name, $number_of_posts_to_show );
+
+				?>
+			</div><!-- .featured-content-grid-wrapper -->
+				        
+		</section>
+
+		<?php
+
+	}
+	endif;
+
+	if ( ! function_exists( '_mgd_artistic_developer_featured_posts_from_category' ) ) :
+	/**
+	 * Render the featured projects
+	 */
+	function _mgd_artistic_developer_featured_posts_from_category( $category_name, $number_of_posts_to_show ) {
+
+		$post_number = 1;		//initialize loop counter to identify which post is being rendered in div id
+		$scroll_speed = 1;		//initialize scroll speed - each grid column scrolls at a different speed
+
+
+		/* get posts from the category for section 1 */
 		// the query
         $the_query = new WP_Query(array(
             'category_name' => $category_name,
@@ -187,15 +225,27 @@ if ( ! function_exists( '_mgd_artistic_developer_featured_posts_from_category' )
         if ($the_query->have_posts()) :
             while ($the_query->have_posts()) : $the_query->the_post();
 
-            	/* Create Grid <div< */
+            	/* Scroll speed - calculate speed of parallax based on even or odd grid column */
+            	if( $post_number % 2 == 0 ) {
+            		$scroll_speed = 2;
+            	} else {
+            		$scroll_speed = 1;
+            	}
+
+            	/* Create Grid Item <div> */
             	?>
-				<div id=<?php echo "\"featured-content-grid-item-" . $post_number . "\"" ?> class="featured-content-grid-item">
+				<div id=<?php echo "\"featured-content-grid-item-" . $post_number . "\"" ?> class="featured-content-grid-item" data-scroll data-scroll-speed=<?php echo "\"" . $scroll_speed*2  . "\"" ?>>
 
 		    		<article class="featured-post">
 					<?php
 
+					/* Featured image */
 	             	the_post_thumbnail();
-	             	the_title();
+
+	             	/* The title */
+	             	?><h2><?php the_title(); ?> </h2> <?php
+
+	             	/* Excerpt */
 	            	the_excerpt();
 
 	             	?>
@@ -216,8 +266,5 @@ if ( ! function_exists( '_mgd_artistic_developer_featured_posts_from_category' )
             <p><?php __('No News'); ?></p>
         <?php 
     	endif;
-
-
-
-	}
+		}
 	endif;

@@ -147,13 +147,34 @@ function _mgd_artistic_developer_scripts() {
 	wp_enqueue_script( '_mgd-artistic-developer-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 
 	/* Parallax grids */
-	wp_enqueue_script( '_mgd-artistic-developer-parallax-grid', get_template_directory_uri() . '/js/parallax-grid.js', array(), _S_VERSION, true );
+	//wp_enqueue_script( '_mgd-artistic-developer-parallax-grid', get_template_directory_uri() . '/js/parallax-grid.js', array(), _S_VERSION, true );
+
+	wp_enqueue_style( '_mgd-artistic-developer-locomotive-style', get_template_directory_uri() . '/css/locomotive-scroll.css', array(), _S_VERSION );
+
+	/* Locomotive Scroll */
+	wp_enqueue_script( '_mgd-artistic-developer-locomotive-scroll', get_template_directory_uri() . '/js/locomotive-scroll.min.js', array(), _S_VERSION, true );
+
+
+	wp_enqueue_script( '_mgd-artistic-developer-webpack-js', get_template_directory_uri() . '/dist/main.js', array(), _S_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
 add_action( 'wp_enqueue_scripts', '_mgd_artistic_developer_scripts' );
+
+
+function _mgd_artistic_developer_add_type_attribute($tag, $handle, $src) {
+    // if not your script, do nothing and return original $tag
+    if ( '_mgd-artistic-developer-locomotive-run' !== $handle ) {
+        return $tag;
+    }
+    // change the script tag by adding type="module" and return it.
+    $tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
+    return $tag;
+}
+
+add_filter('script_loader_tag', '_mgd_artistic_developer_add_type_attribute' , 10, 3);
 
 /**
  * Implement the Custom Header feature.

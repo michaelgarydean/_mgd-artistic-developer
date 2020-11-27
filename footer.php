@@ -11,7 +11,7 @@
 
 ?>
 
-	<footer id="colophon" class="site-footer">
+	<footer id="colophon" class="site-footer" data-scroll-section data-scroll-sticky>
 		<div class="site-info">
 			<a href="<?php echo esc_url( __( 'https://wordpress.org/', '_mgd-artistic-developer' ) ); ?>">
 				<?php

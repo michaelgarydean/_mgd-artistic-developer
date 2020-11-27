@@ -17,10 +17,21 @@
     "url": "https://github.com/Automattic/_s/issues"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^12.1.0",
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/register": "^7.12.1",
+    "@wordpress/scripts": "^12.5.0",
     "dir-archiver": "^1.1.1",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-if": "^3.0.0",
+    "gulp-sass": "^4.1.0",
     "node-sass": "^4.14.1",
-    "rtlcss": "^2.5.0"
+    "rtlcss": "^2.5.0",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "yargs": "^7.1.1"
   },
   "rtlcssConfig": {
     "options": {
@@ -41,9 +52,14 @@
     "compile:rtl": "rtlcss style.css style-rtl.css",
     "lint:scss": "wp-scripts lint-style 'sass/**/*.scss'",
     "lint:js": "wp-scripts lint-js 'js/*.js'",
-    "bundle": "dir-archiver --src . --dest ../_s.zip --exclude .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore README.md composer.json composer.lock node_modules vendor package-lock.json package.json .travis.yml phpcs.xml.dist sass style.css.map"
+    "bundle": "dir-archiver --src . --dest ../_s.zip --exclude .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore README.md composer.json composer.lock node_modules vendor package-lock.json package.json .travis.yml phpcs.xml.dist sass style.css.map",
+    "build": "wp-scripts build && webpack --config webpack.config.js",
+    "start": "wp-scripts start",
+    "dev": "webpack --mode development"
   },
   "dependencies": {
-    "locomotive-scroll": "^4.0.4"
-  }
+    "locomotive-scroll": "^4.0.4",
+    "lodash": "^4.17.20"
+  },
+  "main": "gulpfile.js"
 }

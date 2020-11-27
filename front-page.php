@@ -15,7 +15,7 @@
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
+	<main id="primary" class="site-main" data-scroll>
 
 		<?php
 
@@ -31,67 +31,26 @@ get_header();
 
 		</div><!-- .landing-page-header -->
 
-		<!-- THESE TWO SECTIONS ARE THE SAME AND SHOULD BE IN A DIFFERNT FILE -->
-		<!-- SET ID BY NUMBER OF SECTIONS -->
+		<!-- Featured Content sections -->
+		<?php
+			/* @TODO
+			 *
+			 * User can choose these in the theme options.
+			 * User can choose how many posts to feature in each section
+			 */
+			$categories_to_feature = array(
+				'web-development',
+				'creative-coding'
+			);
 
-		<!-- First section of featured content -->
-		<section id="projects" class="featured-content-section">
+			//tag each section id with the index its created by.
+			$which_section = 1;
 
-			<!-- section title -->
-	    	<div class="scrolling-titles">
-	    		<?php
-		    		$category = get_category_by_slug('web-development'); 
-					$category_name = $category->name;
-	    		?>
-	    		<h2><?php echo $category->name;	?></h2>
-	    	</div><!-- .scrolling-titles -->
+			foreach( $categories_to_feature as $category_slug ) {
+				_mgd_artistic_developer_featured_posts( $category_slug, $which_section, 3 );
 
-	    	<!-- grid layout with posts -->
-	    	<div id="featured-content-grid-wrapper-1" class="featured-content-grid-wrapper">
-			<?php
-
-				/* 
-				* @TODO
-				* This should be a theme option, including the id of the section 
-				*/
-
-				/* get posts from the category for section 1 */
-				_mgd_artistic_developer_featured_posts_from_category( 'web-development' );
-
-				?>
-			</div><!-- .featured-content-grid-wrapper -->
-				        
-		</section>
-
-		<!-- Second section of featured content -->
-		<section id="artworks" class="featured-content-section">
-			<!-- section title -->
-	    	<div class="scrolling-titles">
-	    		<?php
-		    		$category = get_category_by_slug('creative-coding'); 
-					$category_name = $category->name;
-	    		?>
-	    		<h2><?php echo $category->name;	?></h2>
-	    	</div><!-- .scrolling-titles -->
-
-	    	<!-- grid layout with posts -->
-	    	<div class="featured-content-grid-wrapper">
-	    		<article class="featured-post">
-				<?php
-
-				/* 
-				* @TODO
-				* This should be a theme option, including the id of the section 
-				*/
-
-				/* get posts from the category for section 1 */
-				_mgd_artistic_developer_featured_posts_from_category( 'creative-coding' );
-
-				?>
-				</article><!-- .featured-post -->
-			</div><!-- .featured-content-grid-wrapper -->
-				        
-		</section>
+			}
+		?>
 
 	</main><!-- #main -->
 

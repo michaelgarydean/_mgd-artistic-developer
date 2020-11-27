@@ -22,12 +22,12 @@
 
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<div id="page" class="site">
+<div id="page" class="site" data-scroll-container>
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', '_mgd-artistic-developer' ); ?></a>
 
 
 	<!-- this is going to break when it's not front-page.php -->
-	<div id="landing-page-header-container" class="header-container">
+	<div id="landing-page-header-container" class="header-container" data-scroll-section>
 
 	<header id="masthead" class="site-header">
 		<div class="site-branding">

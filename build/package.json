@@ -1,0 +1,19 @@
+{
+  "name": "artistic_developer",
+  "version": "1.0.0",
+  "description": "A WordPress theme to showcase creative coding projects and front-end development.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mykedean/_mgd-artistic-developer.git"
+  },
+  "author": "Michael Dean <contact@michaeldean.ca>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mykedean/_mgd-artistic-developer/issues"
+  },
+  "homepage": "https://github.com/mykedean/_mgd-artistic-developer#readme"
+}
